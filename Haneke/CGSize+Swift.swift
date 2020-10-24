@@ -6,7 +6,11 @@
 //  Copyright (c) 2014 Haneke. All rights reserved.
 //
 
+#if !os(macOS)
 import UIKit
+#else
+import CoreGraphics
+#endif
 
 extension CGSize {
 

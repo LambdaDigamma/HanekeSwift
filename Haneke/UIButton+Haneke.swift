@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Haneke. All rights reserved.
 //
 
+#if !os(macOS)
 import UIKit
 
 public extension UIButton {
@@ -232,3 +233,5 @@ public extension UIButton {
         return true
     }
 }
+
+#endif

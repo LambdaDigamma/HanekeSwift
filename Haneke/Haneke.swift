@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 Haneke. All rights reserved.
 //
 
+#if !os(macOS)
 import UIKit
+
 
 public struct HanekeGlobals {
     
@@ -53,3 +55,5 @@ func errorWithCode(_ code: Int, description: String) -> Error {
     let userInfo = [NSLocalizedDescriptionKey: description]
     return NSError(domain: HanekeGlobals.Domain, code: code, userInfo: userInfo) as Error
 }
+
+#endif

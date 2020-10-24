@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Haneke. All rights reserved.
 //
 
+#if !os(macOS)
 import UIKit
 
 public extension UIImageView {
@@ -139,3 +140,5 @@ public extension UIImageView {
     }
     
 }
+
+#endif

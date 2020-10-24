@@ -6,13 +6,15 @@
 //  Copyright (c) 2014 Haneke. All rights reserved.
 //
 
+#if !os(macOS)
 import UIKit
+
 
 // See: http://stackoverflow.com/questions/25922152/not-identical-to-self
 public protocol DataConvertible {
     associatedtype Result
     
-    static func convertFromData(_ data:Data) -> Result?
+    static func convertFromData(_ data: Data) -> Result?
 }
 
 public protocol DataRepresentable {
@@ -27,7 +29,7 @@ extension UIImage : DataConvertible, DataRepresentable {
     public typealias Result = UIImage
 
     // HACK: UIImage data initializer is no longer thread safe. See: https://github.com/AFNetworking/AFNetworking/issues/2572#issuecomment-115854482
-    static func safeImageWithData(_ data:Data) -> Result? {
+    static func safeImageWithData(_ data: Data) -> Result? {
         imageSync.lock()
         let image = UIImage(data:data, scale: scale)
         imageSync.unlock()
@@ -127,3 +129,5 @@ public enum JSON : DataConvertible, DataRepresentable {
     }
     
 }
+
+#endif

@@ -5,8 +5,9 @@
 //  Created by Luis Ascorbe on 23/07/14.
 //  Copyright (c) 2014 Haneke. All rights reserved.
 //
-
+#if !os(macOS)
 import UIKit
+
 
 // Used to add T to NSCache
 class ObjectWrapper : NSObject {
@@ -309,3 +310,5 @@ open class Cache<T: DataConvertible> where T.Result == T, T : DataRepresentable 
     }
     
 }
+
+#endif

@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Haneke. All rights reserved.
 //
 
+#if !os(macOS)
 import UIKit
 
 extension HanekeGlobals {
@@ -103,3 +104,5 @@ open class NetworkFetcher<T : DataConvertible> : Fetcher<T> {
         DispatchQueue.main.async { fail(error) }
     }
 }
+
+#endif

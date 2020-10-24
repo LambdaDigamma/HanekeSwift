@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 Haneke. All rights reserved.
 //
 
+#if !os(macOS)
 import UIKit
 
 extension UIImage {
-
+    
     func hnk_imageByScaling(toSize size: CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(size, !hnk_hasAlpha(), 0.0)
         draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
@@ -17,16 +18,16 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return resizedImage!
     }
-
+    
     func hnk_hasAlpha() -> Bool {
         guard let alphaInfo = self.cgImage?.alphaInfo else { return false }
         switch alphaInfo {
-        case .first, .last, .premultipliedFirst, .premultipliedLast, .alphaOnly:
-            return true
-        case .none, .noneSkipFirst, .noneSkipLast:
-            return false
-        @unknown default:
-            fatalError()
+            case .first, .last, .premultipliedFirst, .premultipliedLast, .alphaOnly:
+                return true
+            case .none, .noneSkipFirst, .noneSkipLast:
+                return false
+            @unknown default:
+                fatalError()
         }
     }
     
@@ -44,16 +45,16 @@ extension UIImage {
         // See: http://stackoverflow.com/questions/23723564/which-cgimagealphainfo-should-we-use
         var bitmapInfo = originalBitmapInfo
         switch alphaInfo {
-        case .none:
-            let rawBitmapInfoWithoutAlpha = (bitmapInfo?.rawValue)! & ~CGBitmapInfo.alphaInfoMask.rawValue
-            let rawBitmapInfo = rawBitmapInfoWithoutAlpha | CGImageAlphaInfo.noneSkipFirst.rawValue
-            bitmapInfo = CGBitmapInfo(rawValue: rawBitmapInfo)
-        case .premultipliedFirst, .premultipliedLast, .noneSkipFirst, .noneSkipLast:
-            break
-        case .alphaOnly, .last, .first: // Unsupported
-            return self
-        @unknown default:
-            fatalError()
+            case .none:
+                let rawBitmapInfoWithoutAlpha = (bitmapInfo?.rawValue)! & ~CGBitmapInfo.alphaInfoMask.rawValue
+                let rawBitmapInfo = rawBitmapInfoWithoutAlpha | CGImageAlphaInfo.noneSkipFirst.rawValue
+                bitmapInfo = CGBitmapInfo(rawValue: rawBitmapInfo)
+            case .premultipliedFirst, .premultipliedLast, .noneSkipFirst, .noneSkipLast:
+                break
+            case .alphaOnly, .last, .first: // Unsupported
+                return self
+            @unknown default:
+                fatalError()
         }
         
         let colorSpace = CGColorSpaceCreateDeviceRGB()
@@ -61,7 +62,7 @@ extension UIImage {
         guard let context = CGContext(data: nil, width: Int(ceil(pixelSize.width)), height: Int(ceil(pixelSize.height)), bitsPerComponent: (originalImageRef?.bitsPerComponent)!, bytesPerRow: 0, space: colorSpace, bitmapInfo: (bitmapInfo?.rawValue)!) else {
             return self
         }
-
+        
         let imageRect = CGRect(x: 0, y: 0, width: pixelSize.width, height: pixelSize.height)
         UIGraphicsPushContext(context)
         
@@ -81,5 +82,7 @@ extension UIImage {
         let image = UIImage(cgImage: decompressedImageRef, scale:scale, orientation:UIImage.Orientation.up)
         return image
     }
-
+    
 }
+
+#endif

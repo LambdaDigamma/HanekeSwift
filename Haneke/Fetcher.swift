@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 Haneke. All rights reserved.
 //
 
-import UIKit
+import Foundation
+
+#if !os(macOS)
 
 // See: http://stackoverflow.com/questions/25915306/generic-closure-in-protocol
 open class Fetcher<T : DataConvertible> {
@@ -39,3 +41,5 @@ class SimpleFetcher<T : DataConvertible> : Fetcher<T> {
     override func cancelFetch() {}
     
 }
+
+#endif

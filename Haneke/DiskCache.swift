@@ -8,6 +8,8 @@
 
 import Foundation
 
+#if !os(macOS)
+
 open class DiskCache {
     
     open class func basePath() -> String {
@@ -235,3 +237,5 @@ private func isNoSuchFileError(_ error : Error?) -> Bool {
     }
     return false
 }
+
+#endif

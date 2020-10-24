@@ -8,6 +8,8 @@
 
 import Foundation
 
+#if !os(macOS)
+
 extension HanekeGlobals {
 
     // It'd be better to define this in the DiskFetcher class but Swift doesn't allow to declare an enum in a generic type
@@ -90,3 +92,5 @@ open class DiskFetcher<T : DataConvertible> : Fetcher<T> {
         })
     }
 }
+
+#endif
